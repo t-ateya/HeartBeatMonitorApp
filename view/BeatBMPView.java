@@ -17,12 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controller.ControllerInterface;
+import controller.BeatControllerInterface;
 import model.BeatInterface;
 
 public class BeatBMPView implements ActionListener, BeatObserver, BPMObserver {
 	BeatInterface model;
-	ControllerInterface controller;
+	BeatControllerInterface controller;
 
 	JFrame viewFrame;
 	JPanel viewPanel;
@@ -40,7 +40,7 @@ public class BeatBMPView implements ActionListener, BeatObserver, BPMObserver {
 	JMenuItem startMenuItem;
 	JMenuItem stopMenuItem;
 
-	public BeatBMPView(BeatInterface model, ControllerInterface controller){
+	public BeatBMPView(BeatInterface model, BeatControllerInterface controller){
 		this.model = model;
 		this.controller = controller;
 		model.registerObserver((BeatObserver)this);
