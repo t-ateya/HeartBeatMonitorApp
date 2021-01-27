@@ -1,8 +1,6 @@
 package view;
 
 import javax.swing.*;
-import java.awt.event.*;
-import java.awt.*;
 
 
 public class BeatBar extends JProgressBar implements Runnable {

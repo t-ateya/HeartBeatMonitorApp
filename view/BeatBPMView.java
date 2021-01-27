@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.ControllerInterface;
-import controller.BeatController;
 import model.BeatModelInterface;
 
 public class BeatBPMView implements ActionListener, BeatObserver, BPMObserver {
@@ -48,7 +47,7 @@ public class BeatBPMView implements ActionListener, BeatObserver, BPMObserver {
 		model.registerObserver((BPMObserver)this);
 	}
 
-	public void creatView(){
+	public void createView(){
 		//We create all the swing components here
 		viewPanel = new JPanel(new GridLayout(1, 2));
 		viewFrame = new JFrame("View");
@@ -80,38 +79,17 @@ public void createControls(){
 	menu = new JMenu("BeatBPM Control");
 	startMenuItem = new JMenuItem("Start");
 	menu.add(startMenuItem);
-	startMenuItem.addActionListener(new ActionListener(){
+	startMenuItem.addActionListener(event->controller.start());
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			controller.start();
-
-		}
-
-	});
 	stopMenuItem = new JMenuItem("Stop");
 	menu.add(stopMenuItem);
-	stopMenuItem.addActionListener(new ActionListener(){
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			controller.stop();
-		}
-
-	});
-
-	JMenuItem exit = new JMenuItem("Quit");
-	exit.addActionListener(new ActionListener(){
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-
-		}
-
-	});
+	stopMenuItem.addActionListener(event->controller.stop());
 	
+	JMenuItem exit = new JMenuItem("Quit");
+	exit.addActionListener(event->System.exit(0));
+
 	menu.add(exit);
+	menuBar.add(menu);
 	controlFrame.setJMenuBar(menuBar);
 
 	bpmTextField = new JTextField(2);
@@ -124,19 +102,18 @@ public void createControls(){
 	increaseBPMButton.addActionListener(this);
 	decreaseBPMButton.addActionListener(this);
 
-	JPanel buttoPanel = new JPanel(new GridLayout(1, 2));
+	JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
 
-	buttoPanel.add(decreaseBPMButton);
-	buttoPanel.add(increaseBPMButton);
+	buttonPanel.add(decreaseBPMButton);
+	buttonPanel.add(increaseBPMButton);
 
 	JPanel enterPanel = new JPanel(new GridLayout(1, 2));
-	
 	enterPanel.add(bpmLabel);
 	enterPanel.add(bpmTextField);
 	JPanel insideControlPanel = new JPanel(new GridLayout(3,1));
 	insideControlPanel.add(enterPanel);
 	insideControlPanel.add(setBPMButton);
-	insideControlPanel.add(buttoPanel);
+	insideControlPanel.add(buttonPanel);
 	controlPanel.add(insideControlPanel);
 
 	bpmLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -167,28 +144,45 @@ public void disableStartMenuItem(){
 	startMenuItem.setEnabled(false);
 }
 
-@Override
+	@Override 
 	public void updateBMP() {
-		int bpm = model.getBPM();
-		if (bpm == 0){
-			bpmOutputLabel.setText("Offline");
-		}else {
-			bpmOutputLabel.setText("Current BPM: " + model.getBPM());
+		if (model !=null){
+			int bpm = model.getBPM();
+			if (bpm == 0){
+				if (bpmOutputLabel !=null){
+					bpmOutputLabel.setText("Offline");
+				}
+			}else {
+				if (bpmOutputLabel !=null){
+					bpmOutputLabel.setText("Current BPM: " + model.getBPM());
+				}
+			}
 		}
-
+		
 	}
 
+		
 	@Override
 	public void updateBeat() {
-		beatBar.setValue(100);
+		if (beatBar !=null){
+			beatBar.setValue(100);
+		}
+		
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == setBPMButton){
-			int bpm = Integer.parseInt(bpmTextField.getText());
-			controller.setBPM(bpm);
+			int bpm = 90;
+			String bpmText = bpmTextField.getText();
+			if (bpmText ==null || bpmText.contentEquals("")){
+				bpm = 90;
+			}else {
+				bpm = Integer.parseInt(bpmTextField.getText());
+			}
+		 	controller.setBPM(bpm);
+
 		}else if (event.getSource() == increaseBPMButton){
 			controller.increaseBPM();
 		}else if (event.getSource() == decreaseBPMButton){
