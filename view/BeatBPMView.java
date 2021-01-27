@@ -17,12 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controller.BeatControllerInterface;
-import model.BeatInterface;
+import controller.ControllerInterface;
+import controller.BeatController;
+import model.BeatModelInterface;
 
-public class BeatBMPView implements ActionListener, BeatObserver, BPMObserver {
-	BeatInterface model;
-	BeatControllerInterface controller;
+public class BeatBPMView implements ActionListener, BeatObserver, BPMObserver {
+	BeatModelInterface model;
+	ControllerInterface controller;
 
 	JFrame viewFrame;
 	JPanel viewPanel;
@@ -40,7 +41,7 @@ public class BeatBMPView implements ActionListener, BeatObserver, BPMObserver {
 	JMenuItem startMenuItem;
 	JMenuItem stopMenuItem;
 
-	public BeatBMPView(BeatInterface model, BeatControllerInterface controller){
+	public BeatBPMView(ControllerInterface controller, BeatModelInterface model){
 		this.model = model;
 		this.controller = controller;
 		model.registerObserver((BeatObserver)this);
@@ -66,7 +67,7 @@ public class BeatBMPView implements ActionListener, BeatObserver, BPMObserver {
 
 	}
 
-public void createControls(int i, int j){
+public void createControls(){
 	//We'll create all swing components here
 	JFrame.setDefaultLookAndFeelDecorated(true);
 	controlFrame = new JFrame("Control");
@@ -179,7 +180,7 @@ public void disableStartMenuItem(){
 
 	@Override
 	public void updateBeat() {
-		beat.setValue(100);
+		beatBar.setValue(100);
 
 	}
 

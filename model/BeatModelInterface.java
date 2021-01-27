@@ -4,7 +4,7 @@ package model;
 import view.BPMObserver;
 import view.BeatObserver;
 
-public interface BeatInterface {
+public interface BeatModelInterface {
 	void initialize();
 
 	void on();

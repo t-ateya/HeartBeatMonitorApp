@@ -12,7 +12,7 @@ import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 import javax.sound.midi.*;
 
-public class BeatModel implements BeatInterface, MetaEventListener {
+public class BeatModel implements BeatModelInterface, MetaEventListener {
 	Sequencer sequencer ;
 
 	ArrayList<BeatObserver> beatObservers = new ArrayList<>();

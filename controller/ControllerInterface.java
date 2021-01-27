@@ -1,6 +1,6 @@
 package controller;
 
-public interface BeatControllerInterface  {
+public interface ControllerInterface  {
 	void start();
 	void stop();
 	void increaseBPM();
