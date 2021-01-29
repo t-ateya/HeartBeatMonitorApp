@@ -145,7 +145,7 @@ public void disableStartMenuItem(){
 }
 
 	@Override 
-	public void updateBMP() {
+	public void updateBPM() {
 		if (model !=null){
 			int bpm = model.getBPM();
 			if (bpm == 0){
